@@ -35,42 +35,42 @@ El orden de ejecución es: infraestructura → alta (REQ-1) → edición (REQ-2)
   - Rama: `dev_infraestructura` → abrir PR contra `main`.
   - Ensure all tests pass, ask the user if questions arise.
 
-- [ ] 3. REQ-1: Alta de suscripciones (rama `dev_crud_subscriptions` — alta)
-  - [ ] 3.1 Test Agent: escribir tests en rojo para validadores y creación
+- [x] 3. REQ-1: Alta de suscripciones (rama `dev_crud_subscriptions` — alta)
+  - [x] 3.1 Test Agent: escribir tests en rojo para validadores y creación
     - Tests unitarios de `validateName`, `validateAmount`, `validateCurrency`, `validateStartDate`, `validateFrequency`, `validateStatus` (casos vacíos, `0`, `Infinity`, `NaN`, fechas inválidas como `2024-02-30`, valores fuera de dominio)
     - Tests de `validateCreateInput` con campo ausente por cada posición
     - Tests de `createSubscription`: entrada válida devuelve `created` con UUID v4 y lista ampliada; id no colisiona con existentes
     - Al ejecutar por primera vez, todos deben fallar (fase roja)
     - Commit: `test: add red tests for subscription creation and validation`
     - _Requirements: 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9_
-  - [ ] 3.2 Property test: unicidad de IDs generados
+  - [x] 3.2 Property test: unicidad de IDs generados
     - **Property 1: Unicidad de IDs generados**
     - Generador propio inline de entradas válidas; mínimo 100 iteraciones: crear N suscripciones secuencialmente y verificar todos los ids distintos y sin colisión con ids preexistentes
     - **Validates: Requirements 1.1, 1.2**
-  - [ ] 3.3 Property test: rechazo exhaustivo de inputs inválidos
+  - [x] 3.3 Property test: rechazo exhaustivo de inputs inválidos
     - **Property 2: Rechazo de inputs inválidos en creación**
     - Generador propio inline que corrompe al menos un campo por iteración; mínimo 100 iteraciones: `createSubscription` lanza `AppError` con `VALIDATION_ERROR` y la lista queda sin cambios
     - **Validates: Requirements 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9**
-  - [ ] 3.4 Developer Agent: implementar validadores (`src/domain/validation.ts`)
+  - [x] 3.4 Developer Agent: implementar validadores (`src/domain/validation.ts`)
     - Funciones puras con asserts tipados según la tabla del design (regex `YYYY-MM-DD` + `new Date(v)` válido, `isFinite`, `> 0`, trim no vacío, valores literales permitidos)
     - `validateCreateInput` valida campos obligatorios y lanza `AppError` con el campo faltante identificado
     - TSDoc en inglés
     - _Requirements: 1.3–1.9_
-  - [ ] 3.5 Developer Agent: implementar `createSubscription` (`src/domain/subscriptions.ts`)
+  - [x] 3.5 Developer Agent: implementar `createSubscription` (`src/domain/subscriptions.ts`)
     - Generar id con `crypto.randomUUID()`, verificar no colisión con existentes (`DUPLICATE_ID` defensivo), construir suscripción y devolver `{ updated, created }`
     - TSDoc en inglés
     - _Requirements: 1.1, 1.2_
-  - [ ] 3.6 Developer Agent: implementar escritura de `writeSubscriptions` (`src/storage/fileStorage.ts`)
+  - [x] 3.6 Developer Agent: implementar escritura de `writeSubscriptions` (`src/storage/fileStorage.ts`)
     - Escritura atómica: `subscriptions.json.tmp` + `fs.rename()`; indentación 2 espacios; errores de disco → `AppError IO_WRITE_ERROR` con el error original como contexto; limpieza del temporal en fallo
     - TSDoc en inglés
     - _Requirements: 6.2, 6.7_
-  - [ ] 3.7 QA Agent: ejecutar suite, corregir y actualizar documentación
+  - [x] 3.7 QA Agent: ejecutar suite, corregir y actualizar documentación
     - Ejecutar `npm test`; si hay fallos, volver a 3.4–3.5 (ciclo Developer/QA hasta verde)
     - Añadir tests de ejemplo de `writeSubscriptions` con mocks de `node:fs/promises` (`mock.method`)
     - Commit: `feat: add subscription creation with validation and atomic persistence`
     - _Requirements: 1.1–1.9, 6.2, 6.7_
 
-- [ ] 4. Checkpoint - REQ-1 completo
+- [x] 4. Checkpoint - REQ-1 completo
   - Todos los tests (unit, property, storage mock) pasan.
   - PR de `dev_crud_subscriptions` con checklist de criterios REQ-1.
   - Ensure all tests pass, ask the user if questions arise.
