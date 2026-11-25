@@ -103,3 +103,42 @@ export function updateSubscription(
 
   return { updated, subscription };
 }
+
+/**
+ * Finds a subscription by its unique `id`.
+ *
+ * @param existing - Current list of subscriptions in the store.
+ * @param id - Unique identifier of the subscription to retrieve.
+ * @returns The matching {@link Subscription}.
+ * @throws {AppError} With code `NOT_FOUND` if no subscription matches `id`.
+ */
+export function findById(existing: Subscription[], id: string): Subscription {
+  const found = existing.find((sub) => sub.id === id);
+  if (!found) {
+    throw new AppError(
+      "NOT_FOUND",
+      `No se encontró ninguna suscripción con id "${id}".`,
+      { id }
+    );
+  }
+  return found;
+}
+
+/**
+ * Deletes the subscription with the given `id` from the list.
+ *
+ * Does not mutate `existing`; returns a new array without the removed item.
+ *
+ * @param existing - Current list of subscriptions in the store.
+ * @param id - Unique identifier of the subscription to delete.
+ * @returns An object with the `updated` subscription list.
+ * @throws {AppError} With code `NOT_FOUND` if no subscription matches `id`.
+ */
+export function deleteSubscription(
+  existing: Subscription[],
+  id: string
+): { updated: Subscription[] } {
+  findById(existing, id);
+  const updated = existing.filter((sub) => sub.id !== id);
+  return { updated };
+}
