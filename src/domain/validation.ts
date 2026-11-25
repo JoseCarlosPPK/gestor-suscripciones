@@ -10,6 +10,7 @@ import type {
   CreateSubscriptionInput,
   Frequency,
   SubscriptionStatus,
+  UpdateSubscriptionInput,
 } from "./types.js";
 
 const DATE_FORMAT_REGEX = /^\d{4}-\d{2}-\d{2}$/;
@@ -184,4 +185,43 @@ export function validateCreateInput(
   validateStartDate(record.startDate);
   validateFrequency(record.frequency);
   validateStatus(record.status);
+}
+
+/**
+ * Validates a partial subscription update payload.
+ *
+ * Only fields present in the payload (with non-`undefined` values) are validated.
+ * Rejects any attempt to include the immutable `id` field with `FORBIDDEN_FIELD`.
+ *
+ * @param input - Unknown partial update payload to validate.
+ * @throws {AppError} With code `FORBIDDEN_FIELD` if `id` is present in `input`.
+ * @throws {AppError} With code `VALIDATION_ERROR` if `input` is not an object or any present field is invalid.
+ */
+export function validateUpdateInput(
+  input: unknown
+): asserts input is UpdateSubscriptionInput {
+  if (input === null || typeof input !== "object" || Array.isArray(input)) {
+    throw new AppError(
+      "VALIDATION_ERROR",
+      "La entrada de actualización debe ser un objeto.",
+      { received: input }
+    );
+  }
+
+  const record = input as Record<string, unknown>;
+
+  if (Object.prototype.hasOwnProperty.call(record, "id")) {
+    throw new AppError(
+      "FORBIDDEN_FIELD",
+      "El campo 'id' es inmutable y no puede modificarse.",
+      { field: "id" }
+    );
+  }
+
+  if (record.name !== undefined) validateName(record.name);
+  if (record.amount !== undefined) validateAmount(record.amount);
+  if (record.currency !== undefined) validateCurrency(record.currency);
+  if (record.startDate !== undefined) validateStartDate(record.startDate);
+  if (record.frequency !== undefined) validateFrequency(record.frequency);
+  if (record.status !== undefined) validateStatus(record.status);
 }

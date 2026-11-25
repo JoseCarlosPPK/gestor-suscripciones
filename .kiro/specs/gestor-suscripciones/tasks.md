@@ -75,8 +75,8 @@ El orden de ejecución es: infraestructura → alta (REQ-1) → edición (REQ-2)
   - PR de `dev_crud_subscriptions` con checklist de criterios REQ-1.
   - Ensure all tests pass, ask the user if questions arise.
 
-- [ ] 5. REQ-2: Edición de suscripciones (rama `dev_edicion_suscripciones`)
-  - [ ] 5.1 Test Agent: escribir tests en rojo para `updateSubscription` y `validateUpdateInput`
+- [x] 5. REQ-2: Edición de suscripciones (rama `dev_edicion_suscripciones`)
+  - [x] 5.1 Test Agent: escribir tests en rojo para `updateSubscription` y `validateUpdateInput`
     - Id no existente → `NOT_FOUND`
     - Actualización parcial modifica solo los campos dados y conserva el resto
     - Campo inválido → error y lista original intacta (atomicidad)
@@ -84,25 +84,25 @@ El orden de ejecución es: infraestructura → alta (REQ-1) → edición (REQ-2)
     - Idempotencia: editar con los mismos valores no cambia el estado
     - Commit: `test: add red tests for subscription update`
     - _Requirements: 2.1, 2.2, 2.3, 2.4, 2.5_
-  - [ ] 5.2 Property test: conservación de campos no modificados
+  - [x] 5.2 Property test: conservación de campos no modificados
     - **Property 3: Actualización parcial conserva campos no modificados**
     - Generador propio inline de subconjuntos de campos válidos; mínimo 100 iteraciones
     - **Validates: Requirements 2.1**
-  - [ ] 5.3 Property test: atomicidad de la edición
+  - [x] 5.3 Property test: atomicidad de la edición
     - **Property 4: Atomicidad de la edición**
     - Generador propio inline que mezcla campos válidos con al menos uno inválido; mínimo 100 iteraciones verificando estado idéntico tras el fallo
     - **Validates: Requirements 2.3, 2.4**
-  - [ ] 5.4 Developer Agent: implementar `updateSubscription` y `validateUpdateInput`
+  - [x] 5.4 Developer Agent: implementar `updateSubscription` y `validateUpdateInput`
     - `validateUpdateInput`: valida solo los campos presentes; rechaza `id` con `FORBIDDEN_FIELD`
     - `updateSubscription`: busca por id (`NOT_FOUND`), aplica cambios parcialmente, operando de forma atómica (validar todo antes de mutar)
     - TSDoc en inglés
     - _Requirements: 2.1–2.5_
-  - [ ] 5.5 QA Agent: ejecutar suite, corregir y actualizar documentación
+  - [x] 5.5 QA Agent: ejecutar suite, corregir y actualizar documentación
     - Ciclo Developer/QA hasta verde; commit: `feat: add atomic subscription update`
     - PR de `dev_edicion_suscripciones` con checklist REQ-2
     - _Requirements: 2.1–2.5_
 
-- [ ] 6. Checkpoint - REQ-2 completo
+- [x] 6. Checkpoint - REQ-2 completo
   - Ensure all tests pass, ask the user if questions arise.
 
 - [ ] 7. REQ-3: Baja de suscripciones (rama `dev_baja_suscripciones`)

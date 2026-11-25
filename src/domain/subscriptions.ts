@@ -4,8 +4,12 @@
 
 import { randomUUID } from "node:crypto";
 import { AppError } from "../errors/AppError.js";
-import type { CreateSubscriptionInput, Subscription } from "./types.js";
-import { validateCreateInput } from "./validation.js";
+import type {
+  CreateSubscriptionInput,
+  Subscription,
+  UpdateSubscriptionInput,
+} from "./types.js";
+import { validateCreateInput, validateUpdateInput } from "./validation.js";
 
 /**
  * Creates a new subscription, validates the input, and generates a unique UUID v4 `id`.
@@ -49,4 +53,53 @@ export function createSubscription(
     updated: [...existing, created],
     created,
   };
+}
+
+/**
+ * Partially updates an existing subscription identified by `id`.
+ *
+ * Operates atomically: validates all provided fields before constructing the
+ * updated list, leaving `existing` untouched if any validation fails.
+ *
+ * @param existing - Current list of subscriptions in the store.
+ * @param id - Unique identifier of the subscription to update.
+ * @param input - Partial update payload (excluding `id`).
+ * @returns An object with the `updated` subscription list and the updated `subscription`.
+ * @throws {AppError} With code `NOT_FOUND` if no subscription matches `id`.
+ * @throws {AppError} With code `FORBIDDEN_FIELD` if `input` attempts to modify `id`.
+ * @throws {AppError} With code `VALIDATION_ERROR` if any provided field is invalid.
+ */
+export function updateSubscription(
+  existing: Subscription[],
+  id: string,
+  input: UpdateSubscriptionInput
+): { updated: Subscription[]; subscription: Subscription } {
+  const index = existing.findIndex((sub) => sub.id === id);
+  if (index === -1) {
+    throw new AppError(
+      "NOT_FOUND",
+      `No se encontró ninguna suscripción con id "${id}".`,
+      { id }
+    );
+  }
+
+  validateUpdateInput(input);
+
+  const current = existing[index]!;
+  const subscription: Subscription = {
+    id: current.id,
+    name: input.name !== undefined ? input.name.trim() : current.name,
+    amount: input.amount !== undefined ? input.amount : current.amount,
+    currency:
+      input.currency !== undefined ? input.currency.trim() : current.currency,
+    startDate:
+      input.startDate !== undefined ? input.startDate : current.startDate,
+    frequency:
+      input.frequency !== undefined ? input.frequency : current.frequency,
+    status: input.status !== undefined ? input.status : current.status,
+  };
+
+  const updated = existing.map((sub, i) => (i === index ? subscription : sub));
+
+  return { updated, subscription };
 }
