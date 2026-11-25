@@ -84,11 +84,11 @@ El orden de ejecución es: infraestructura → alta (REQ-1) → edición (REQ-2)
     - Idempotencia: editar con los mismos valores no cambia el estado
     - Commit: `test: add red tests for subscription update`
     - _Requirements: 2.1, 2.2, 2.3, 2.4, 2.5_
-  - [ ]* 5.2 Property test: conservación de campos no modificados
+  - [ ] 5.2 Property test: conservación de campos no modificados
     - **Property 3: Actualización parcial conserva campos no modificados**
     - Generador propio inline de subconjuntos de campos válidos; mínimo 100 iteraciones
     - **Validates: Requirements 2.1**
-  - [ ]* 5.3 Property test: atomicidad de la edición
+  - [ ] 5.3 Property test: atomicidad de la edición
     - **Property 4: Atomicidad de la edición**
     - Generador propio inline que mezcla campos válidos con al menos uno inválido; mínimo 100 iteraciones verificando estado idéntico tras el fallo
     - **Validates: Requirements 2.3, 2.4**
@@ -112,7 +112,7 @@ El orden de ejecución es: infraestructura → alta (REQ-1) → edición (REQ-2)
     - La eliminación reduce el tamaño exactamente en 1 y no altera el resto
     - Commit: `test: add red tests for subscription deletion`
     - _Requirements: 3.1, 3.2_
-  - [ ]* 7.2 Property test: eliminación verificable
+  - [ ] 7.2 Property test: eliminación verificable
     - **Property 5: Eliminación verificable**
     - Generador propio inline de conjuntos de suscripciones; mínimo 100 iteraciones: tras eliminar, ninguna consulta con ese id lo encuentra
     - **Validates: Requirements 3.1, 3.2**
@@ -137,11 +137,11 @@ El orden de ejecución es: infraestructura → alta (REQ-1) → edición (REQ-2)
     - `computeSpendingSummary` devuelve ambos valores
     - Commit: `test: add red tests for normalized spending calculations`
     - _Requirements: 4.1, 4.2, 4.3, 4.4_
-  - [ ]* 9.2 Property test: relación mensual/anual
+  - [ ] 9.2 Property test: relación mensual/anual
     - **Property 6: Relación mensual / anual**
     - Generador propio inline de conjuntos mixtos; mínimo 100 iteraciones: anual = mensual × 12
     - **Validates: Requirements 4.1, 4.2**
-  - [ ]* 9.3 Property test: exclusión de pausadas y no negatividad
+  - [ ] 9.3 Property test: exclusión de pausadas y no negatividad
     - **Property 7: Exclusión de suscripciones pausadas en cálculos**
     - Todas pausadas → 0; modificar `amount` de una pausada en conjunto mixto no altera el resumen; totales ≥ 0 con `amount > 0`
     - **Validates: Requirements 4.3, 4.4**
@@ -164,11 +164,11 @@ El orden de ejecución es: infraestructura → alta (REQ-1) → edición (REQ-2)
     - Casos límite: fin de mes (31 de enero → mensual), años bisiestos (29/02)
     - Commit: `test: add red tests for next charge date and alert window`
     - _Requirements: 5.1, 5.2, 5.3, 5.4, 5.5_
-  - [ ]* 11.2 Property test: corrección del próximo cobro
+  - [ ] 11.2 Property test: corrección del próximo cobro
     - **Property 8: Corrección del próximo cobro**
     - Generador propio inline de pares (startDate, referenceDate); mínimo 100 iteraciones: fecha ≥ referenceDate y alcanzable en k incrementos exactos de frecuencia
     - **Validates: Requirements 5.1**
-  - [ ]* 11.3 Property test: completitud e integridad de la ventana
+  - [ ] 11.3 Property test: completitud e integridad de la ventana
     - **Property 9: Completitud e integridad de la ventana de alerta**
     - Generador propio inline de conjuntos y horizontes ≥ 0; mínimo 100 iteraciones: exactitud del conjunto devuelto y exclusión de pausadas
     - **Validates: Requirements 5.2, 5.5**
@@ -194,11 +194,11 @@ El orden de ejecución es: infraestructura → alta (REQ-1) → edición (REQ-2)
     - Uso de mocks de `node:fs/promises` (`mock.method`)
     - Commit: `test: add red tests for data store read and schema validation`
     - _Requirements: 6.1, 6.3, 6.4, 6.5, 6.6_
-  - [ ]* 13.2 Property test: serialización con indentación correcta
+  - [ ] 13.2 Property test: serialización con indentación correcta
     - **Property 10: Serialización JSON con indentación correcta**
     - Generador propio inline de listas válidas; mínimo 100 iteraciones: round-trip `JSON.stringify/parse` estructuralmente equivalente e indentación de 2 espacios
     - **Validates: Requirements 6.2**
-  - [ ]* 13.3 Property test: rechazo de JSON corrupto o con esquema incorrecto
+  - [ ] 13.3 Property test: rechazo de JSON corrupto o con esquema incorrecto
     - **Property 11: Rechazo de JSON corrupto o con esquema incorrecto**
     - Generador propio inline de strings no-JSON y JSON sin esquema válido; mínimo 100 iteraciones verificando `FILE_CORRUPT` / `SCHEMA_MISMATCH`
     - **Validates: Requirements 6.4, 6.5**
@@ -226,7 +226,7 @@ El orden de ejecución es: infraestructura → alta (REQ-1) → edición (REQ-2)
     - Pausadas nunca incluidas en ningún formato
     - Commit: `test: add red tests for report export`
     - _Requirements: 7.1, 7.2, 7.3, 7.4, 7.5_
-  - [ ]* 15.2 Property test: completitud de las exportaciones
+  - [ ] 15.2 Property test: completitud de las exportaciones
     - **Property 12: Completitud de las exportaciones**
     - Generador propio inline de N activas y M pausadas; mínimo 100 iteraciones: cardinalidad CSV = N, contenido JSON/consola = N activas, totales correctos, cero pausadas
     - **Validates: Requirements 7.1, 7.2, 7.3, 7.5**
