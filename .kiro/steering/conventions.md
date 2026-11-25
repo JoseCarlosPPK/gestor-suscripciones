@@ -21,20 +21,21 @@
 - Escribe todo el código en **inglés**: nombres de variables, funciones, clases, interfaces, tipos, archivos de código, pruebas y mensajes internos del código.
 - Si hay textos visibles para el usuario final o salidas de CLI en español, mantén la lógica interna y los identificadores en inglés.
 
-
 ## Código y documentación TSDoc
 - Documenta por defecto todas las funciones, clases, interfaces y tipos relevantes usando comentarios en formato **TSDoc / JSDoc** (`/** ... */`), indicando su propósito, parámetros y valor de retorno cuando aporte claridad.
 - Mantén la documentación técnica y archivos `.md` en **español**, y el código, identificadores, comentarios TSDoc y mensajes de commit en **inglés**.
 
 ## Git y GitHub
 - Los mensajes de commit deben escribirse en **inglés**, siguiendo un formato claro como `feat: ...`, `test: ...`, `fix: ...` o `chore: ...`.
-- Trabaja con **commits atómicos**: cada commit debe representar un cambio pequeño, coherente y autocontenido.
+- Trabaja con **commits atómicos**: cada tarea del requisito debe reflejarse en commits pequeños, coherentes y autocontenidos (en inglés).
+- Crea **un único issue en GitHub por requisito** (utilizando `gh issue create`) al iniciar el requisito, indicando claramente qué requisito de la especificación satisface y anotando su número (`#<numero>`) para enlazarlo. No crees issues separados por cada tarea dentro del mismo requisito.
 - Para cada requisito, crea y cambia a una rama de desarrollo usando `git checkout -b dev_<nombre_requisito_resumido>` (por ejemplo, `dev_crud_subscriptions` o `dev_normalized_billing`).
 - Está permitido hacer `push` de la rama de desarrollo usando explícitamente `git push -u origin <mismo_nombre_rama_local>`.
 - **Prohibido** hacer commits directamente en `main` o hacer `merge` hacia `main`.
-- Al terminar un requisito, puedes abrir una Pull Request (PR) contra `main` que incluya:
-  1. Descripción de lo que resuelve el requisito.
-  2. Una *checklist* con los criterios/tareas completados, marcando explícitamente lo que se ha realizado.
+- Al terminar un requisito, puedes abrir una Pull Request (PR) contra `main` (utilizando `gh pr create` o dejando su contenido listo) que incluya:
+  1. Referencia explícita al issue del requisito mediante `Closes #<numero>` o `Fixes #<numero>` para vincularlo y cerrarlo al hacer merge.
+  2. Descripción clara y documentada de lo que resuelve el requisito.
+  3. Una *checklist* con los criterios/tareas completados, marcando explícitamente (`[x]`) lo que se ha realizado.
 - Mantén un `.gitignore` adecuado para TypeScript/Node (`node_modules/`, `dist/`, archivos temporales) y no subas datos sensibles ni archivos de estado residuales de pruebas.
 
 ## Flujo de pruebas (TDD), actualización documental y roles de agentes
@@ -47,3 +48,5 @@
      - Qué tests específicos fallaron (si los hay) y el motivo breve.
      - Si algún test falla, devuelve el control al **Agente de desarrollo** para que corrija el problema y repita el ciclo de ejecución de tests hasta que todos pasen.
      - **Cuando todos los tests pasen:** actualiza la documentación necesaria (archivos `.md` relevantes, como especificaciones, README o guías de uso) para reflejar el estado real del requisito.
+
+
