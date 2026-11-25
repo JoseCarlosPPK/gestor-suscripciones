@@ -14,6 +14,7 @@ import {
   validateFrequency,
   validateStatus,
   validateCreateInput,
+  validateUpdateInput,
 } from "../../src/domain/validation.js";
 
 /**
@@ -200,5 +201,59 @@ describe("Validation: validateCreateInput", () => {
         field
       );
     }
+  });
+});
+
+describe("Validation: validateUpdateInput", () => {
+  it("should accept valid partial updates", () => {
+    assert.doesNotThrow(() => validateUpdateInput({ amount: 17.99 }));
+    assert.doesNotThrow(() =>
+      validateUpdateInput({ name: "Netflix 4K", status: "pausada" })
+    );
+    assert.doesNotThrow(() =>
+      validateUpdateInput({
+        name: "Spotify",
+        amount: 10.99,
+        currency: "USD",
+        startDate: "2024-06-01",
+        frequency: "anual",
+        status: "activa",
+      })
+    );
+  });
+
+  it("should reject non-object inputs", () => {
+    for (const invalid of [null, undefined, "string", 123, []]) {
+      assertThrowsAppError(() => validateUpdateInput(invalid), "VALIDATION_ERROR");
+    }
+  });
+
+  it("should reject updates containing the id field with FORBIDDEN_FIELD", () => {
+    assertThrowsAppError(
+      () => validateUpdateInput({ id: "new-id", amount: 19.99 }),
+      "FORBIDDEN_FIELD"
+    );
+    assertThrowsAppError(
+      () => validateUpdateInput({ id: undefined }),
+      "FORBIDDEN_FIELD"
+    );
+  });
+
+  it("should reject invalid values for any present field with VALIDATION_ERROR", () => {
+    assertThrowsAppError(() => validateUpdateInput({ name: "   " }), "VALIDATION_ERROR");
+    assertThrowsAppError(() => validateUpdateInput({ amount: 0 }), "VALIDATION_ERROR");
+    assertThrowsAppError(() => validateUpdateInput({ currency: "" }), "VALIDATION_ERROR");
+    assertThrowsAppError(
+      () => validateUpdateInput({ startDate: "2024-02-30" }),
+      "VALIDATION_ERROR"
+    );
+    assertThrowsAppError(
+      () => validateUpdateInput({ frequency: "semanal" }),
+      "VALIDATION_ERROR"
+    );
+    assertThrowsAppError(
+      () => validateUpdateInput({ status: "cancelada" }),
+      "VALIDATION_ERROR"
+    );
   });
 });
