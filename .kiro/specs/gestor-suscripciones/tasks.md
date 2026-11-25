@@ -105,28 +105,28 @@ El orden de ejecución es: infraestructura → alta (REQ-1) → edición (REQ-2)
 - [x] 6. Checkpoint - REQ-2 completo
   - Ensure all tests pass, ask the user if questions arise.
 
-- [ ] 7. REQ-3: Baja de suscripciones (rama `dev_baja_suscripciones`)
-  - [ ] 7.1 Test Agent: escribir tests en rojo para `deleteSubscription`
+- [x] 7. REQ-3: Baja de suscripciones (rama `dev_baja_suscripciones`)
+  - [x] 7.1 Test Agent: escribir tests en rojo para `deleteSubscription`
     - Id existente → eliminada de la lista y confirmación
     - Id inexistente → `NOT_FOUND`
     - La eliminación reduce el tamaño exactamente en 1 y no altera el resto
     - Commit: `test: add red tests for subscription deletion`
     - _Requirements: 3.1, 3.2_
-  - [ ] 7.2 Property test: eliminación verificable
+  - [x] 7.2 Property test: eliminación verificable
     - **Property 5: Eliminación verificable**
     - Generador propio inline de conjuntos de suscripciones; mínimo 100 iteraciones: tras eliminar, ninguna consulta con ese id lo encuentra
     - **Validates: Requirements 3.1, 3.2**
-  - [ ] 7.3 Developer Agent: implementar `deleteSubscription` y `findById`
+  - [x] 7.3 Developer Agent: implementar `deleteSubscription` y `findById`
     - `findById` lanza `NOT_FOUND` si no existe; `deleteSubscription` filtra por id y devuelve `{ updated }`
     - Integrar con `writeSubscriptions` en el nivel CLI/llamador para persistir el nuevo estado
     - TSDoc en inglés
     - _Requirements: 3.1, 3.2, 3.3_
-  - [ ] 7.4 QA Agent: ejecutar suite, corregir y actualizar documentación
+  - [x] 7.4 QA Agent: ejecutar suite, corregir y actualizar documentación
     - Ciclo Developer/QA hasta verde; commit: `feat: add subscription deletion with persistence`
     - PR de `dev_baja_suscripciones` con checklist REQ-3
     - _Requirements: 3.1, 3.2, 3.3_
 
-- [ ] 8. Checkpoint - REQ-3 completo
+- [x] 8. Checkpoint - REQ-3 completo
   - Ensure all tests pass, ask the user if questions arise.
 
 - [ ] 9. REQ-4: Cálculo de gasto normalizado (rama `dev_normalized_billing`)
