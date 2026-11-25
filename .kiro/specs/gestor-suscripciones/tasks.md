@@ -129,32 +129,32 @@ El orden de ejecución es: infraestructura → alta (REQ-1) → edición (REQ-2)
 - [x] 8. Checkpoint - REQ-3 completo
   - Ensure all tests pass, ask the user if questions arise.
 
-- [ ] 9. REQ-4: Cálculo de gasto normalizado (rama `dev_normalized_billing`)
-  - [ ] 9.1 Test Agent: escribir tests en rojo para `calculations.ts`
+- [x] 9. REQ-4: Cálculo de gasto normalizado (rama `dev_normalized_billing`)
+  - [x] 9.1 Test Agent: escribir tests en rojo para `calculations.ts`
     - `computeMonthlyNormalized`: mensual/1, trimestral/3, anual/12; mezcla de frecuencias
     - Exclusión de pausadas; todas pausadas → 0; lista vacía → 0
     - `computeAnnualProjected` = mensual × 12
     - `computeSpendingSummary` devuelve ambos valores
     - Commit: `test: add red tests for normalized spending calculations`
     - _Requirements: 4.1, 4.2, 4.3, 4.4_
-  - [ ] 9.2 Property test: relación mensual/anual
+  - [x] 9.2 Property test: relación mensual/anual
     - **Property 6: Relación mensual / anual**
     - Generador propio inline de conjuntos mixtos; mínimo 100 iteraciones: anual = mensual × 12
     - **Validates: Requirements 4.1, 4.2**
-  - [ ] 9.3 Property test: exclusión de pausadas y no negatividad
+  - [x] 9.3 Property test: exclusión de pausadas y no negatividad
     - **Property 7: Exclusión de suscripciones pausadas en cálculos**
     - Todas pausadas → 0; modificar `amount` de una pausada en conjunto mixto no altera el resumen; totales ≥ 0 con `amount > 0`
     - **Validates: Requirements 4.3, 4.4**
-  - [ ] 9.4 Developer Agent: implementar `calculations.ts`
+  - [x] 9.4 Developer Agent: implementar `calculations.ts`
     - `FREQUENCY_FACTOR` map, `computeMonthlyNormalized`, `computeAnnualProjected`, `computeSpendingSummary` como funciones puras
     - TSDoc en inglés
     - _Requirements: 4.1–4.4_
-  - [ ] 9.5 QA Agent: ejecutar suite, corregir y actualizar documentación
+  - [x] 9.5 QA Agent: ejecutar suite, corregir y actualizar documentación
     - Ciclo Developer/QA hasta verde; commit: `feat: add normalized monthly and annual spending calculation`
     - PR de `dev_normalized_billing` con checklist REQ-4
     - _Requirements: 4.1–4.4_
 
-- [ ] 10. Checkpoint - REQ-4 completo
+- [x] 10. Checkpoint - REQ-4 completo
   - Ensure all tests pass, ask the user if questions arise.
 
 - [ ] 11. REQ-5: Próximo cobro y ventana de alerta (rama `dev_alerts`)
