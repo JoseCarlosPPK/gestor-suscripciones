@@ -1,0 +1,19 @@
+{
+  "name": "gestor-suscripciones",
+  "version": "0.1.0",
+  "description": "Local subscription manager with recurring spending tracking and renewal alerts",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json && tsc -p tsconfig.test.json",
+    "start": "node dist/cli/index.js",
+    "test": "npm run build && node --test 'dist-tests/**/*.test.js'"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.10",
+    "typescript": "^5.9.3"
+  }
+}
