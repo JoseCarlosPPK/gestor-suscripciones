@@ -15,6 +15,8 @@ import type {
 } from "../../src/domain/types.js";
 import {
   createSubscription,
+  deleteSubscription,
+  findById,
   updateSubscription,
 } from "../../src/domain/subscriptions.js";
 
@@ -451,6 +453,115 @@ describe("Subscriptions: Property 4 — Atomicidad de la edición", () => {
       );
 
       assert.deepStrictEqual(existing, snapshot);
+    }
+  });
+});
+
+describe("Subscriptions: findById (unit)", () => {
+  const sampleList: Subscription[] = [
+    {
+      id: "550e8400-e29b-41d4-a716-446655440000",
+      name: "Netflix",
+      amount: 15.99,
+      currency: "EUR",
+      startDate: "2024-01-15",
+      frequency: "mensual",
+      status: "activa",
+    },
+    {
+      id: "550e8400-e29b-41d4-a716-446655440001",
+      name: "Spotify",
+      amount: 9.99,
+      currency: "EUR",
+      startDate: "2024-02-01",
+      frequency: "mensual",
+      status: "activa",
+    },
+  ];
+
+  it("should return the subscription matching the given id", () => {
+    const found = findById(sampleList, sampleList[1]!.id);
+    assert.deepStrictEqual(found, sampleList[1]);
+  });
+
+  it("should throw NOT_FOUND when id does not exist", () => {
+    assert.throws(
+      () => findById(sampleList, "00000000-0000-4000-8000-000000000999"),
+      (err: unknown) => err instanceof AppError && err.code === "NOT_FOUND"
+    );
+  });
+});
+
+describe("Subscriptions: deleteSubscription (unit)", () => {
+  const sampleList: Subscription[] = [
+    {
+      id: "550e8400-e29b-41d4-a716-446655440000",
+      name: "Netflix",
+      amount: 15.99,
+      currency: "EUR",
+      startDate: "2024-01-15",
+      frequency: "mensual",
+      status: "activa",
+    },
+    {
+      id: "550e8400-e29b-41d4-a716-446655440001",
+      name: "Spotify",
+      amount: 9.99,
+      currency: "EUR",
+      startDate: "2024-02-01",
+      frequency: "mensual",
+      status: "activa",
+    },
+  ];
+
+  it("should delete an existing subscription, reduce length by 1, and preserve the rest", () => {
+    const snapshot = structuredClone(sampleList);
+    const { updated } = deleteSubscription(sampleList, sampleList[0]!.id);
+
+    assert.strictEqual(updated.length, sampleList.length - 1);
+    assert.deepStrictEqual(updated, [sampleList[1]]);
+    assert.deepStrictEqual(sampleList, snapshot, "existing list must not be mutated");
+  });
+
+  it("should throw NOT_FOUND when id does not exist", () => {
+    const snapshot = structuredClone(sampleList);
+
+    assert.throws(
+      () => deleteSubscription(sampleList, "00000000-0000-4000-8000-000000000999"),
+      (err: unknown) => err instanceof AppError && err.code === "NOT_FOUND"
+    );
+
+    assert.deepStrictEqual(sampleList, snapshot);
+  });
+});
+
+describe("Subscriptions: Property 5 — Eliminación verificable", () => {
+  it("should ensure deleted subscription cannot be found by any subsequent lookup across 100+ iterations", () => {
+    for (let iteration = 0; iteration < 120; iteration++) {
+      let list: Subscription[] = [];
+      const count = randomInt(1, 10);
+      for (let i = 0; i < count; i++) {
+        list = createSubscription(list, generateValidInput()).updated;
+      }
+
+      const targetIndex = randomInt(0, list.length - 1);
+      const targetId = list[targetIndex]!.id;
+
+      const { updated } = deleteSubscription(list, targetId);
+
+      assert.strictEqual(updated.length, list.length - 1);
+      assert.strictEqual(
+        updated.some((sub) => sub.id === targetId),
+        false
+      );
+      assert.throws(
+        () => findById(updated, targetId),
+        (err: unknown) => err instanceof AppError && err.code === "NOT_FOUND"
+      );
+
+      for (const remaining of updated) {
+        assert.deepStrictEqual(findById(updated, remaining.id), remaining);
+      }
     }
   });
 });
