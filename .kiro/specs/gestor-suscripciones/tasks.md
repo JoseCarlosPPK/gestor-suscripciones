@@ -8,7 +8,7 @@ El orden de ejecución es: infraestructura → alta (REQ-1) → edición (REQ-2)
 
 ## Tasks
 
-- [ ] 1. Infraestructura inicial del proyecto
+- [x] 1. Infraestructura inicial del proyecto
   - [ ] 1.1 Crear estructura de proyecto, `package.json` y `tsconfig.json`
     - Crear `src/domain/`, `src/storage/`, `src/cli/`, `src/errors/`, `tests/domain/`, `tests/storage/`, `data/`
     - `package.json` con scripts: `build` (tsc), `start` (node dist/cli/index.js), `test` (node --test)
