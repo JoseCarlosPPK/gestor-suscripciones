@@ -9,27 +9,27 @@ El orden de ejecución es: infraestructura → alta (REQ-1) → edición (REQ-2)
 ## Tasks
 
 - [x] 1. Infraestructura inicial del proyecto
-  - [ ] 1.1 Crear estructura de proyecto, `package.json` y `tsconfig.json`
+  - [x] 1.1 Crear estructura de proyecto, `package.json` y `tsconfig.json`
     - Crear `src/domain/`, `src/storage/`, `src/cli/`, `src/errors/`, `tests/domain/`, `tests/storage/`, `data/`
     - `package.json` con scripts: `build` (tsc), `start` (node dist/cli/index.js), `test` (node --test)
     - `tsconfig.json` con `strict: true`, `target: ES2022`, `module: Node16`, `outDir: dist`, `rootDir: src`
     - Actualizar `.gitignore`: `node_modules/`, `dist/`, `*.tmp`, `data/subscriptions.json`
     - Instalar `typescript` como dependencia de desarrollo
     - _Requirements: 6.2 (formato legible del almacén), Convenciones (stack y scripts)_
-  - [ ] 1.2 Implementar tipos del dominio (`src/domain/types.ts`)
+  - [x] 1.2 Implementar tipos del dominio (`src/domain/types.ts`)
     - Definir `Frequency`, `SubscriptionStatus`, `ExportFormat`, `Subscription`, `CreateSubscriptionInput`, `UpdateSubscriptionInput`, `SpendingSummary`, `AlertWindow`, `ExportResult` según el design doc
     - Documentar todos los tipos con TSDoc en inglés
     - _Requirements: Modelo de entidades (Glossary), 1.1_
-  - [ ] 1.3 Implementar `AppError` (`src/errors/AppError.ts`)
+  - [x] 1.3 Implementar `AppError` (`src/errors/AppError.ts`)
     - Clase `AppError extends Error` con `ErrorCode` tipado (los 10 códigos del design), mensaje en español y `context` opcional
     - TSDoc completo
     - _Requirements: 1.3–1.9, 2.2, 3.2, 6.4–6.7 (errores descriptivos y tipados)_
-  - [ ] 1.4 Configurar el runner de tests
+  - [x] 1.4 Configurar el runner de tests
     - Añadir configuración para que `node --test` ejecute `tests/**/*.test.ts` (o JS compilado según estrategia)
     - Crear un test de humo mínimo que verifique el runner
     - _Requirements: Estrategia de testing (design)_
 
-- [ ] 2. Checkpoint - Infraestructura compilable y testeable
+- [x] 2. Checkpoint - Infraestructura compilable y testeable
   - `npm run build` compila sin errores; el test de humo pasa.
   - Commit: `chore: set up project skeleton, types and error class`.
   - Rama: `dev_infraestructura` → abrir PR contra `main`.
@@ -43,11 +43,11 @@ El orden de ejecución es: infraestructura → alta (REQ-1) → edición (REQ-2)
     - Al ejecutar por primera vez, todos deben fallar (fase roja)
     - Commit: `test: add red tests for subscription creation and validation`
     - _Requirements: 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9_
-  - [ ]* 3.2 Property test: unicidad de IDs generados
+  - [ ] 3.2 Property test: unicidad de IDs generados
     - **Property 1: Unicidad de IDs generados**
     - Generador propio inline de entradas válidas; mínimo 100 iteraciones: crear N suscripciones secuencialmente y verificar todos los ids distintos y sin colisión con ids preexistentes
     - **Validates: Requirements 1.1, 1.2**
-  - [ ]* 3.3 Property test: rechazo exhaustivo de inputs inválidos
+  - [ ] 3.3 Property test: rechazo exhaustivo de inputs inválidos
     - **Property 2: Rechazo de inputs inválidos en creación**
     - Generador propio inline que corrompe al menos un campo por iteración; mínimo 100 iteraciones: `createSubscription` lanza `AppError` con `VALIDATION_ERROR` y la lista queda sin cambios
     - **Validates: Requirements 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9**
