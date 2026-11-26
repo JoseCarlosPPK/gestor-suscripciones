@@ -70,11 +70,6 @@ El orden de ejecución es: infraestructura → alta (REQ-1) → edición (REQ-2)
     - Commit: `feat: add subscription creation with validation and atomic persistence`
     - _Requirements: 1.1–1.9, 6.2, 6.7_
 
-- [x] 4. Checkpoint - REQ-1 completo
-  - Todos los tests (unit, property, storage mock) pasan.
-  - PR de `dev_crud_subscriptions` con checklist de criterios REQ-1.
-  - Ensure all tests pass, ask the user if questions arise.
-
 - [x] 5. REQ-2: Edición de suscripciones (rama `dev_edicion_suscripciones`)
   - [x] 5.1 Test Agent: escribir tests en rojo para `updateSubscription` y `validateUpdateInput`
     - Id no existente → `NOT_FOUND`
@@ -102,10 +97,7 @@ El orden de ejecución es: infraestructura → alta (REQ-1) → edición (REQ-2)
     - PR de `dev_edicion_suscripciones` con checklist REQ-2
     - _Requirements: 2.1–2.5_
 
-- [x] 6. Checkpoint - REQ-2 completo
-  - Ensure all tests pass, ask the user if questions arise.
-
-- [x] 7. REQ-3: Baja de suscripciones (rama `dev_baja_suscripciones`)
+- [x] 6. REQ-3: Baja de suscripciones (rama `dev_baja_suscripciones`)
   - [x] 7.1 Test Agent: escribir tests en rojo para `deleteSubscription`
     - Id existente → eliminada de la lista y confirmación
     - Id inexistente → `NOT_FOUND`
@@ -126,10 +118,7 @@ El orden de ejecución es: infraestructura → alta (REQ-1) → edición (REQ-2)
     - PR de `dev_baja_suscripciones` con checklist REQ-3
     - _Requirements: 3.1, 3.2, 3.3_
 
-- [x] 8. Checkpoint - REQ-3 completo
-  - Ensure all tests pass, ask the user if questions arise.
-
-- [x] 9. REQ-4: Cálculo de gasto normalizado (rama `dev_normalized_billing`)
+- [x] 7. REQ-4: Cálculo de gasto normalizado (rama `dev_normalized_billing`)
   - [x] 9.1 Test Agent: escribir tests en rojo para `calculations.ts`
     - `computeMonthlyNormalized`: mensual/1, trimestral/3, anual/12; mezcla de frecuencias
     - Exclusión de pausadas; todas pausadas → 0; lista vacía → 0
@@ -154,10 +143,7 @@ El orden de ejecución es: infraestructura → alta (REQ-1) → edición (REQ-2)
     - PR de `dev_normalized_billing` con checklist REQ-4
     - _Requirements: 4.1–4.4_
 
-- [x] 10. Checkpoint - REQ-4 completo
-  - Ensure all tests pass, ask the user if questions arise.
-
-- [ ] 11. REQ-5: Próximo cobro y ventana de alerta (rama `dev_alerts`)
+- [ ] 8. REQ-5: Próximo cobro y ventana de alerta (rama `dev_alerts`)
   - [ ] 11.1 Test Agent: escribir tests en rojo para `alerts.ts`
     - `computeNextChargeDate`: `startDate >= referenceDate` → `startDate`; avance en incrementos exactos de 1/3/12 meses; resultado siempre ≥ `referenceDate`
     - `getAlertWindow`: N=0 devuelve solo cobros del día exacto; N por defecto = 7; extremos inclusive; `horizonDays < 0` → `VALIDATION_ERROR`; pausadas excluidas
@@ -182,10 +168,7 @@ El orden de ejecución es: infraestructura → alta (REQ-1) → edición (REQ-2)
     - PR de `dev_alerts` con checklist REQ-5
     - _Requirements: 5.1–5.5_
 
-- [ ] 12. Checkpoint - REQ-5 completo
-  - Ensure all tests pass, ask the user if questions arise.
-
-- [ ] 13. REQ-6: Persistencia y validación del almacén (rama `dev_persistence`)
+- [ ] 9. REQ-6: Persistencia y validación del almacén (rama `dev_persistence`)
   - [ ] 13.1 Test Agent: escribir tests en rojo para `readSubscriptions`
     - Archivo inexistente → `[]` sin error (`FILE_NOT_FOUND` interno, no propagado)
     - JSON inválido → `FILE_CORRUPT` (no inicializa silenciosamente)
@@ -214,10 +197,7 @@ El orden de ejecución es: infraestructura → alta (REQ-1) → edición (REQ-2)
     - PR de `dev_persistence` con checklist REQ-6
     - _Requirements: 6.1–6.7_
 
-- [ ] 14. Checkpoint - REQ-6 completo
-  - Ensure all tests pass, ask the user if questions arise.
-
-- [ ] 15. REQ-7: Exportación de informes (rama `dev_export`)
+- [ ] 10. REQ-7: Exportación de informes (rama `dev_export`)
   - [ ] 15.1 Test Agent: escribir tests en rojo para `export.ts`
     - Formato `"consola"`: nombre, próxima fecha, importe y moneda de cada activa + línea de totales
     - Formato `"json"`: objeto con las activas y los totales de `computeSpendingSummary`
@@ -239,10 +219,7 @@ El orden de ejecución es: infraestructura → alta (REQ-1) → edición (REQ-2)
     - PR de `dev_export` con checklist REQ-7
     - _Requirements: 7.1–7.5_
 
-- [ ] 16. Checkpoint - REQ-7 completo
-  - Ensure all tests pass, ask the user if questions arise.
-
-- [ ] 17. CLI: punto de entrada con todos los comandos (rama `dev_cli`)
+- [ ] 11. CLI: punto de entrada con todos los comandos (rama `dev_cli`)
   - [ ] 17.1 Test Agent: escribir tests en rojo para el enrutamiento de la CLI
     - Tests de parseo de argumentos por comando (`add`, `edit`, `delete`, `list`, `summary`, `alerts`, `export`)
     - Tests de integración por comando invocando la CLI con mocks de `readSubscriptions`/`writeSubscriptions`: add persiste y muestra la creada; edit/delete persisten; summary muestra totales; alerts aplica N por defecto y `--days` opcional; export con `--format consola|json|csv`
@@ -260,11 +237,7 @@ El orden de ejecución es: infraestructura → alta (REQ-1) → edición (REQ-2)
     - PR de `dev_cli` con checklist de integración
     - _Requirements: Todos (integración end-to-end automatizada)_
 
-- [ ] 18. Checkpoint - CLI completo
-  - `npm run build` y `npm test` en verde; la CLI responde a los 7 comandos.
-  - Ensure all tests pass, ask the user if questions arise.
-
-- [ ] 19. PRs y documentación final
+- [ ] 12. PRs y documentación final
   - [ ] 19.1 Verificar y completar las Pull Requests de cada requisito
     - Revisar que cada rama `dev_*` tiene su PR contra `main` con descripción del requisito y checklist de criterios de aceptación marcados
     - Ningún commit ni merge directo en `main`
@@ -274,7 +247,7 @@ El orden de ejecución es: infraestructura → alta (REQ-1) → edición (REQ-2)
     - Commit: `chore: add README and usage guide`
     - _Requirements: Convenciones (idioma del proyecto)_
 
-- [ ] 20. Final checkpoint - Suite completa en verde
+- [ ] 13. Final checkpoint - Suite completa en verde
   - Ejecutar `npm run build && npm test`: compilación sin errores y todos los tests (unit, property, storage, CLI) pasan.
   - Ensure all tests pass, ask the user if questions arise.
 
@@ -297,37 +270,32 @@ El orden de ejecución es: infraestructura → alta (REQ-1) → edición (REQ-2)
     { "id": 2, "tasks": ["3.1", "3.2", "3.3"] },
     { "id": 3, "tasks": ["3.4", "3.5", "3.6"] },
     { "id": 4, "tasks": ["3.7"] },
-    { "id": 5, "tasks": ["4"] },
-    { "id": 6, "tasks": ["5.1", "5.2", "5.3"] },
-    { "id": 7, "tasks": ["5.4"] },
-    { "id": 8, "tasks": ["5.5"] },
-    { "id": 9, "tasks": ["6"] },
-    { "id": 10, "tasks": ["7.1", "7.2"] },
-    { "id": 11, "tasks": ["7.3"] },
-    { "id": 12, "tasks": ["7.4"] },
-    { "id": 13, "tasks": ["8"] },
-    { "id": 14, "tasks": ["9.1", "9.2", "9.3"] },
-    { "id": 15, "tasks": ["9.4"] },
-    { "id": 16, "tasks": ["9.5"] },
-    { "id": 17, "tasks": ["10"] },
-    { "id": 18, "tasks": ["11.1", "11.2", "11.3"] },
-    { "id": 19, "tasks": ["11.4"] },
-    { "id": 20, "tasks": ["11.5"] },
-    { "id": 21, "tasks": ["12"] },
-    { "id": 22, "tasks": ["13.1", "13.2", "13.3"] },
-    { "id": 23, "tasks": ["13.4", "13.5"] },
-    { "id": 24, "tasks": ["13.6"] },
-    { "id": 25, "tasks": ["14"] },
-    { "id": 26, "tasks": ["15.1", "15.2"] },
-    { "id": 27, "tasks": ["15.3"] },
-    { "id": 28, "tasks": ["15.4"] },
-    { "id": 29, "tasks": ["16"] },
-    { "id": 30, "tasks": ["17.1"] },
-    { "id": 31, "tasks": ["17.2"] },
-    { "id": 32, "tasks": ["17.3"] },
-    { "id": 33, "tasks": ["18"] },
-    { "id": 34, "tasks": ["19.1", "19.2"] },
-    { "id": 35, "tasks": ["20"] }
+    { "id": 5, "tasks": ["4.1", "4.2", "4.3"] },
+    { "id": 6, "tasks": ["4.4"] },
+    { "id": 7, "tasks": ["4.5"] },
+    { "id": 8, "tasks": ["5.1", "5.2"] },
+    { "id": 9, "tasks": ["5.3"] },
+    { "id": 10, "tasks": ["5.4"] },
+    { "id": 11, "tasks": ["6.1", "6.2", "6.3"] },
+    { "id": 12, "tasks": ["6.4"] },
+    { "id": 13, "tasks": ["6.5"] },
+    { "id": 14, "tasks": ["7.1", "7.2", "7.3"] },
+    { "id": 15, "tasks": ["7.4"] },
+    { "id": 16, "tasks": ["7.5"] },
+    { "id": 17, "tasks": ["8.1", "8.2", "8.3"] },
+    { "id": 18, "tasks": ["8.4"] },
+    { "id": 19, "tasks": ["8.5"] },
+    { "id": 20, "tasks": ["9.1", "9.2", "9.3"] },
+    { "id": 21, "tasks": ["9.4", "9.5"] },
+    { "id": 22, "tasks": ["9.6"] },
+    { "id": 23, "tasks": ["10.1", "10.2"] },
+    { "id": 24, "tasks": ["10.3"] },
+    { "id": 25, "tasks": ["10.4"] },
+    { "id": 26, "tasks": ["11.1"] },
+    { "id": 27, "tasks": ["11.2"] },
+    { "id": 28, "tasks": ["11.3"] },
+    { "id": 29, "tasks": ["12.1", "12.2"] },
+    { "id": 30, "tasks": ["13"] }
   ]
 }
 ```
