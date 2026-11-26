@@ -143,27 +143,27 @@ El orden de ejecución es: infraestructura → alta (REQ-1) → edición (REQ-2)
     - PR de `dev_normalized_billing` con checklist REQ-4
     - _Requirements: 4.1–4.4_
 
-- [ ] 8. REQ-5: Próximo cobro y ventana de alerta (rama `dev_alerts`)
-  - [ ] 11.1 Test Agent: escribir tests en rojo para `alerts.ts`
+- [x] 8. REQ-5: Próximo cobro y ventana de alerta (rama `dev_alerts`)
+  - [x] 11.1 Test Agent: escribir tests en rojo para `alerts.ts`
     - `computeNextChargeDate`: `startDate >= referenceDate` → `startDate`; avance en incrementos exactos de 1/3/12 meses; resultado siempre ≥ `referenceDate`
     - `getAlertWindow`: N=0 devuelve solo cobros del día exacto; N por defecto = 7; extremos inclusive; `horizonDays < 0` → `VALIDATION_ERROR`; pausadas excluidas
     - Casos límite: fin de mes (31 de enero → mensual), años bisiestos (29/02)
     - Commit: `test: add red tests for next charge date and alert window`
     - _Requirements: 5.1, 5.2, 5.3, 5.4, 5.5_
-  - [ ] 11.2 Property test: corrección del próximo cobro
+  - [x] 11.2 Property test: corrección del próximo cobro
     - **Property 8: Corrección del próximo cobro**
     - Generador propio inline de pares (startDate, referenceDate); mínimo 100 iteraciones: fecha ≥ referenceDate y alcanzable en k incrementos exactos de frecuencia
     - **Validates: Requirements 5.1**
-  - [ ] 11.3 Property test: completitud e integridad de la ventana
+  - [x] 11.3 Property test: completitud e integridad de la ventana
     - **Property 9: Completitud e integridad de la ventana de alerta**
     - Generador propio inline de conjuntos y horizontes ≥ 0; mínimo 100 iteraciones: exactitud del conjunto devuelto y exclusión de pausadas
     - **Validates: Requirements 5.2, 5.5**
-  - [ ] 11.4 Developer Agent: implementar `alerts.ts`
+  - [x] 11.4 Developer Agent: implementar `alerts.ts`
     - Algoritmo del design: fechas UTC sin hora, periodos enteros por diferencia de meses, `ceil` de incrementos, ajuste final si queda corto
     - `getAlertWindow` con `horizonDays` por defecto 7 y validación de negativos
     - TSDoc en inglés
     - _Requirements: 5.1–5.5_
-  - [ ] 11.5 QA Agent: ejecutar suite, corregir y actualizar documentación
+  - [x] 11.5 QA Agent: ejecutar suite, corregir y actualizar documentación
     - Ciclo Developer/QA hasta verde; commit: `feat: add next charge date and alert window`
     - PR de `dev_alerts` con checklist REQ-5
     - _Requirements: 5.1–5.5_
